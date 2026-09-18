@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+    <application
+        android:allowBackup="false"
+        android:label="Pixel OPA Home"
+        android:supportsRtl="true">
+        <meta-data android:name="xposedmodule" android:value="true" />
+        <meta-data android:name="xposeddescription" android:value="Restores the classic Pixel OPA four-colour Home-button animation." />
+        <meta-data android:name="xposedminversion" android:value="82" />
+    </application>
+</manifest>
