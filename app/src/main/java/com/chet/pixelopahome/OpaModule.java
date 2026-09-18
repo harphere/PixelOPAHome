@@ -306,21 +306,27 @@ public final class OpaModule implements IXposedHookLoadPackage, IXposedHookZygot
             this.host = host;
             density = context.getResources().getDisplayMetrics().density;
             radius = 5f * density;      // classic OPA dot diameter: ~10dp
-            diamond = 16f * density;    // diamond translation
-            outerLine = 30f * density;  // blue/green line positions
-            innerLine = 15f * density;  // red/yellow line positions
+            diamond = 22f * density;    // diamond translation
+            outerLine = 38f * density;  // blue/green line positions
+            innerLine = 19f * density;  // red/yellow line positions
             setWillNotDraw(false);
         }
 
         void begin(float x, float y) {
-            cx = x;
-            cy = y;
-            released = false;
-            inLine = false;
-            setDotsAtCenter();
+    cx = x;
+    cy = y;
+    released = false;
+    inLine = false;
+    setDotsAtCenter();
+
+    handler.postDelayed(() -> {
+        if (!released && isAttachedToWindow()) {
             animateDiamond();
-            handler.postDelayed(longPress, ViewConfiguration.getLongPressTimeout());
         }
+    }, 60L);
+
+    handler.postDelayed(longPress, ViewConfiguration.getLongPressTimeout());
+}
 
         void release() {
             released = true;
@@ -336,7 +342,7 @@ public final class OpaModule implements IXposedHookLoadPackage, IXposedHookZygot
         }
 
         private void animateDiamond() {
-            run(0f, 1f, 190L, new OvershootInterpolator(1.15f), f -> {
+            run(0f, 1f, 220L, new OvershootInterpolator(1.15f), f -> {
                 // Classic Pixel arrangement: red top, green right, yellow bottom, blue left.
                 set(dots[1], cx, cy - diamond * f); // red
                 set(dots[3], cx + diamond * f, cy); // green
